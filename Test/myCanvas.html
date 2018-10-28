@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper {
+            border: solid blue 2px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <canvas id="can" width="800" height="600" style="border: solid red 2px;">您的浏览器不支持Canvas，请升级您的浏览器。</canvas>
+    </div>
+    <script>
+        // 60s
+        var xnum = 60;
+        // maxValue 100
+        var ynum = 100;
+        var intervalH = 1, intervalV = 1;
+        var canvasHeight, canvasWidth;
+        var imgHeight = 400, imgWidth = 600;
+        var zeroX = 100;
+        var zeroY = 500;
+        var canvas = document.getElementById("can");
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            // ctx.moveTo(0, 0);
+            // ctx.lineTo(100, 100);
+            // ctx.stroke();
+            function init() {
+                drawFrame();
+                drawGrid();
+                drawLabel();
+            }
+            function setPen(color, width) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = width;
+            }
+
+            function drawFrame() {
+                drawLine(zeroX, zeroY, zeroX + 600, zeroY);
+                drawLine(zeroX, zeroY, zeroX, zeroY - 400);
+                drawLine(zeroX, zeroY - 400, zeroX + 600, zeroY - 400);
+                drawLine(zeroX + 600, zeroY - 400, zeroX + 600, zeroY);
+            }
+            function drawGrid(intervalX, intervalY) {
+                intervalH = 
+            }
+            function drawLine(fromX, fromY, toX, toY) {
+                setPen("blue", 2)
+                ctx.beginPath();
+                ctx.moveTo(fromX, fromY);
+                ctx.lineTo(toX, toY);
+                ctx.stroke();
+                ctx.closePath();
+            }
+            drawFrame();
+        } else {
+            alert("您的浏览器不支持canvas，请升级您的浏览器");
+        }
+    </script>
+</body>
+
+</html>
