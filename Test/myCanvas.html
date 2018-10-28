@@ -45,23 +45,65 @@
             }
 
             function drawFrame() {
+                setPen("blue", 2)
+                ctx.translate(1, 1);
                 drawLine(zeroX, zeroY, zeroX + 600, zeroY);
                 drawLine(zeroX, zeroY, zeroX, zeroY - 400);
                 drawLine(zeroX, zeroY - 400, zeroX + 600, zeroY - 400);
                 drawLine(zeroX + 600, zeroY - 400, zeroX + 600, zeroY);
             }
             function drawGrid(intervalX, intervalY) {
-                intervalH = 
+                setPen("blue", 2)
+                ctx.translate(1, 1);
+                intervalH = intervalX;
+                intervalV = intervalY;
+                xnum =60 / intervalH / 10;
+                ynum =100 / intervalV / 10;
+                // 经线
+                for (i = 1; i < xnum; i++) {
+                    drawLine(zeroX + intervalH * i * 10 * 10, zeroY, zeroX + intervalH * i * 10 * 10, zeroY - 400);
+                }
+                // 纬线
+                for (j = 1; j < ynum; j++) {
+                    drawLine(zeroX, zeroY - intervalV * j * 4 * 10, zeroX + 600, zeroY - intervalV * j * 4 * 10);
+                }
             }
             function drawLine(fromX, fromY, toX, toY) {
-                setPen("blue", 2)
+
                 ctx.beginPath();
                 ctx.moveTo(fromX, fromY);
                 ctx.lineTo(toX, toY);
                 ctx.stroke();
                 ctx.closePath();
             }
+            function drawTest() {
+                var list = [];
+                var loop = setInterval(function () {
+                    canvas.height = canvas.height;
+                    drawFrame();
+                    drawGrid(1, 1);
+
+                    if (list.length = 11) {
+                        list.shift();
+                    }
+                    var temp = Math.floor(Math.random() * 10) % 10;
+                    console.log(temp);
+                    list.push(temp);
+                    if (list.length > 1) {
+                        setPen("red", 1)
+                        ctx.translate(0.5, 0.5);
+                        for (var index = list.length - 1; index > 0; index--) {
+                            drawLine(zeroX + 600 - 60 * (list.length - 1 - index), zeroY - 40 * list[index],
+                                zeroX + 600 - 60 * (list.length - 1 - index + 1), zeroY - 40 * list[index - 1]);
+                        }
+                    } else {
+
+                    }
+                }, 1000);
+            }
             drawFrame();
+            drawGrid(1, 1);
+            drawTest();
         } else {
             alert("您的浏览器不支持canvas，请升级您的浏览器");
         }
