@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>实时数据显示</title>
+  <style>
+    @media only screen and (max-width: 1184px) {
+
+      .left,
+      .right {
+        width: 60% !important;
+        height: 600px;
+        margin: 10px auto;
+        float: none !important;
+        border-radius: 20px !important;
+      }
+      .content {
+        height: 1250px !important;
+      }
+    }
+
+    html,
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .header {
+      position: relative;
+    }
+
+    .init {
+      opacity: 0;
+      bottom: -10px;
+    }
+
+    .fadein {
+      opacity: 1;
+      bottom: 0px;
+      transition: opacity ease-in-out 0.5s 0s, bottom ease-in-out 0.5s 0s;
+    }
+
+    .header h2 {
+      margin: 20px;
+      height: 50px;
+      line-height: 50px;
+      font-family: "微软雅黑", "黑体";
+      font-weight: 500;
+      border: solid 1px lightblue;
+      border-left: solid 7px lightseagreen;
+      border-radius: 4px;
+      padding-left: 20px;
+      background-color: lightgrey;
+    }
+
+    .content {
+      height: 620px;
+      width: 96%;
+      margin: 0 auto;
+      background-color: #f5f5f5;
+      position: relative;
+    }
+
+    .left {
+      height: 600px;
+      width: 50%;
+      float: left;
+      position: relative;
+      min-width: 560px;
+      border-radius: 20px 0 0 20px;
+    }
+
+    .right {
+      width: 50%;
+      height: 600px;
+      float: left;
+      min-width: 560px;
+      position: relative;
+      border-radius: 0 20px 20px 0;
+    }
+
+    .screen {
+      width: 550px;
+      height: 300px;
+      background: lightblue;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      margin-left: -275px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: solid 2px lightseagreen;
+    }
+
+    .panel {
+      width: 550px;
+      height: 240px;
+      background-color: #ccc;
+      position: absolute;
+      bottom: 0px;
+      left: 50%;
+      margin-left: -275px;
+      border-radius: 10px;
+      border: solid 2px lightseagreen;
+    }
+
+    .panel>p {
+      margin: 10px;
+      font-size: 20px;
+      padding-bottom: 5px;
+      padding-left: 10px;
+      border-bottom: solid 2px black;
+    }
+
+    .bar-conf {
+      width: 33.3%;
+      height: 180px;
+      background-color: red;
+      float: left;
+      position: relative;
+    }
+
+    .cur-conf {
+      width: 66.6%;
+      height: 180px;
+      background-color: yellow;
+      float: left;
+      position: relative;
+    }
+
+    .btns {
+      width: 80%;
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    .btns p {
+      margin-top: 0;
+    }
+
+    .bar {
+      height: 300px;
+      width: 110px;
+      float: left;
+      background-color: red;
+    }
+
+    .cur {
+      height: 300px;
+      width: 440px;
+      float: left;
+    }
+
+    .bargraph {
+      /* border: solid black 1px; */
+      margin: 15px 13px 0;
+    }
+
+    .curgraph {
+      /* border: solid black 1px; */
+      margin: 15px 23px 0;
+    }
+
+    .screen .title {
+      margin: 0px;
+      text-align: center;
+    }
+
+    .cur .title {
+      margin-top: 10px;
+    }
+
+    .data {
+      margin: 0px;
+      height: 16px;
+      line-height: 16px;
+      text-align: center;
+    }
+
+    .grid-a,
+    .grid-b {
+      position: absolute;
+    }
+
+    #grid-1,
+    #grid-3 {
+      margin: 15px 13px 0;
+    }
+
+    #grid-2,
+    #grid-4 {
+      margin: 15px 23px 0;
+    }
+  
+    select {
+      position: absolute;
+      right: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="header init">
+      <h2>实时数据显示</h2>
+    </div>
+    <div class="content init">
+      <div class="left init">
+        <div class="screen">
+          <!-- 柱状图 -->
+          <div class="bar" id="bar1">
+            <canvas class="grid-a" id="grid-1" width="80" height="240"></canvas>
+            <canvas class="bargraph" id="bargraph1" width="80" height="240"></canvas>
+            <p class="data">15</p>
+            <p class="title">CPU使用</p>
+          </div>
+          <!-- 折线图 -->
+          <div class="cur" id="cur1">
+            <canvas class="grid-a" id="grid-2" width="390" height="240"></canvas>
+            <canvas class="curgraph" id="curgraph1" width="390" height="240"></canvas>
+            <p class="title">CPU使用</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p>设置</p>
+        </div>
+      </div>
+      <div class="right init">
+        <div class="screen">
+          <!-- 柱状图 -->
+          <div class="bar" id="bar2">
+            <canvas class="grid-b" id="grid-3" width="80" height="240"></canvas>
+            <canvas class="bargraph" id="bargraph2" width="80" height="240"></canvas>
+            <p class="data">15</p>
+            <p class="title">内存使用</p>
+          </div>
+          <!-- 折线图 -->
+          <div class="cur" id="cur1">
+            <canvas class="grid-b" id="grid-4" width="390" height="240"></canvas>
+            <canvas class="curgraph" id="curgraph2" width="390" height="240"></canvas>
+            <p class="title">内存使用</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p>设置</p>
+          <!--  -->
+          <div class="bar-conf">
+            <div class="btns">
+              <p>柱状图设置</p>
+              <form action="">
+                <span>网格密度</span>
+                <select name="density">
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="fiat">Fiat</option>
+                  <option value="audi">Audi</option>
+                </select>
+                <br>
+                <span>网格数量</span>
+                <select name="density">
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="fiat">Fiat</option>
+                  <option value="audi">Audi</option>
+                </select>
+                <br>
+                <span>网格颜色</span>
+                <select name="density">
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="fiat">Fiat</option>
+                  <option value="audi">Audi</option>
+                </select>
+                <br>
+                <span>柱状图颜色</span>
+                <select name="density">
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="fiat">Fiat</option>
+                  <option value="audi">Audi</option>
+                </select>
+              </form>
+            </div>
+          </div>
+          <div class="cur-conf">
+            <div class="btns">
+              <p>折线图设置</p>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var header = document.getElementsByClassName("header")[0];
+      var left = document.getElementsByClassName("left")[0];
+      var right = document.getElementsByClassName("right")[0];
+      var content = document.getElementsByClassName("content")[0];
+
+      function init() {
+        header.classList.remove("init");
+        header.classList.add("fadein");
+        left.classList.remove("init");
+        left.classList.add("fadein");
+        right.classList.remove("init");
+        right.classList.add("fadein");
+        content.classList.remove("init");
+        content.classList.add("fadein");
+      }
+      window.onload = init;
+    })();
+  </script>
+  <script src="index.js"></script>
+</body>
+
+</html>

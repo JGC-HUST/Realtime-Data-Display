@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .panel {
+      width: 550px;
+      height: 240px;
+      background-color: #ccc;
+      position: absolute;
+      left: 50%;
+      margin-left: -275px;
+      border-radius: 10px;
+      border: solid 2px lightseagreen;
+    }
+
+    .panel>p {
+      margin: 10px;
+      font-size: 20px;
+      padding-bottom: 5px;
+      padding-left: 10px;
+      border-bottom: solid 2px black;
+    }
+
+    .bar-conf {
+      width: 33.3%;
+      height: 180px;
+      background-color: red;
+      float: left;
+    }
+
+    .cur-conf {
+      width: 66.6%;
+      height: 180px;
+      background-color: yellow;
+      float: left;
+    }
+
+    .btns {
+      width: 80%;
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    .btns p {
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="panel">
+    <p>设置</p>
+    <div class="bar-conf">
+      <div class="btns">
+        <p>柱状图设置</p>
+        <form action="">
+          <span>网格密度</span>
+          <select name="density">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+          <br>
+          <span>网格数量</span>
+          <select name="density">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+          <br>
+          <span>网格颜色</span>
+          <select name="density">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+          <br>
+          <span>柱状图颜色</span>
+          <select name="density">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+        </form>
+      </div>
+    </div>
+    <div class="cur-conf">
+      <div class="btns">
+        <p>折线图设置</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
